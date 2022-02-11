@@ -14,15 +14,23 @@
     <body>
         <h1>Shopping List</h1>
         
-        <p> Hello, Adam <a href="">Logout</a> </p>
+        <p> Hello, ${name}. <a href="">Logout</a> </p>
         
         <h2>List</h2>
         
-        <form>
+        <form >
             <label for="item">Add item:</label>
             <input type="text" name="item" id="item">
             
             <button type="submit"> Add</button>
+        </form>
+        
+        <form action="action">
+            <p>
+                <input type="radio" name="item", value="apples">
+                apples
+            </p>
+            <button type="submit">Delete</button>
         </form>
     </body>
 </html>
