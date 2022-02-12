@@ -31,14 +31,19 @@ public class ShoppingListServlet extends HttpServlet {
         
         HttpSession session = request.getSession();
         
-        //String name = (String) session.getAttribute("name");
+        String username = (String) session.getAttribute("username");
+        String query = request.getQueryString();
         
-        if(session.getAttribute("name") == null){
-            getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
-        }else {
-            getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
+        if(username == null){            
+                getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);                
+        }else if (query != null && query.contains("logout")){
+                session.invalidate();
+                getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+        }else{
+                getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
         }
                 
+    
     }
 
     /**
@@ -52,35 +57,38 @@ public class ShoppingListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        
+        HttpSession session = request.getSession();        
         String action = request.getParameter("action");
+        //String username = (String)session.getAttribute("username");
         
-        if(action != null && action.equals("add")){
-            
-            String item = request.getParameter("item");
-             ArrayList<String> items = (ArrayList<String>) session.getAttribute("items");
+        if(session.getAttribute("username") == null && action != null){
+            //request.setAttribute("message", "Username is missing");
+            getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+            return;
+        }else if(action != null && action.equals("add")){            
+                String item = request.getParameter("item");
+                ArrayList<String> listOfItems = (ArrayList<String>) session.getAttribute("listOfItems");
+                listOfItems.add(item);
+                session.setAttribute("listOfItems", listOfItems);
              
-             items.add(item);
-             session.setAttribute("items", items);
+        } else if (action != null && action.equals("delete")){
+                String item = request.getParameter("item");
+                ArrayList<String> listOfItems = (ArrayList<String>) session.getAttribute("listOfItems");
+                listOfItems.remove(item);
+                session.setAttribute("listOfItems", listOfItems);
              
-        } else {
-        
-                String name = request.getParameter("name");
-                     
-                
-                ArrayList<String> items = new ArrayList<>();
-        
-                session.setAttribute ("name", name) ;
-                session.setAttribute ("items", name) ;
-        
-                
-            
+        } else {        
+                String username = request.getParameter("username");                
+                session.setAttribute ("username", username);                    
+                ArrayList<String> listOfItems = new ArrayList<>();        
+                session.setAttribute ("listOfItems", listOfItems);
+                    
         }
        getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
         
     }
+}
 
     
-    }
+    
 

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : register
-    Created on : Feb 9, 2022, 10:29:08 PM
-    Author     : Madhu
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,14 +6,14 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Register</h1>
+        <h1>Shopping List</h1>
         
         <form action="ShoppingList" method="post">
-            <label for="name">Username:</label>
-            <input type="text" name="name" id="name">
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username">
             
             <button type="submit"> Register Name</button>
         </form>
-        
+        <%--<p>${message}</p>--%>
     </body>
 </html>
