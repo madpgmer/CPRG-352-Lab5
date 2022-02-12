@@ -3,7 +3,7 @@
     Created on : Feb 9, 2022, 10:29:25 PM
     Author     : Madhu
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,18 +18,24 @@
         
         <h2>List</h2>
         
-        <form >
+        <form action="ShoppingList" method="post">
+            <input type="hidden" name="action" value="add"> 
+            
+            <%-- this input above will not be displayed to the user. It will only be inside the HTML--%>
+            
             <label for="item">Add item:</label>
             <input type="text" name="item" id="item">
             
             <button type="submit"> Add</button>
         </form>
         
-        <form action="action">
-            <p>
-                <input type="radio" name="item", value="apples">
-                apples
-            </p>
+        <form>
+            <c:forEach items="${items}" var="item"> 
+                <p>
+                    <input type="radio" name="item", value="${item}">
+                    ${item}
+                </p>            
+            </c:forEach>
             <button type="submit">Delete</button>
         </form>
     </body>
